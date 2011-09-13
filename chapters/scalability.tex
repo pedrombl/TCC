@@ -1,0 +1,27 @@
+\section{Scalability}
+
+\subsection{Definition of Scalability}
+In a large scale environment, a choreography must be able to scale to attend different scenario sizes. Web Services Choreographies will probably have some periods that will require more resources that it is usual to maintain its performance.  Suppose that a specific choreography, for example, receives usually N requests per second but some times receives 10N requests. This choreography must be able to support this increase of access quickly.
+
+To support this issue, we may increase its system capability between this period of high demand. We want to have the same performance that we had previously. Therefore, we must know how much of resources we should increase to achieve this goal.  Each choreography will have its particular solution. This will depends on how the choreography is implemented. Bad choreographies architectures will need to increase a lot to achieve that, someones won't even achieve that.
+
+For instance, in the example above, we could increase the resources in the same scale that the number of access increased to gain the same performance. However, only that will not assure we will perform that, i.e.  the choreography may have a bottleneck that will not disappear if we add more resources. Thus, we also must pay attention with the implementation of the choreography. We gain scalability with the collaboration of the hardware and the software. 
+
+Architectures that achieved the same performance by increasing the system capability with the same proportion as the increase of the problem size are scalable [\citet{QUINN}]. For \citet{LAW}, a simulation is scalable if the improvements in simulation capability express in direct proportion improvements in system architectural capability. However, these definitions just say if an application is scalable or not. Consequently, we can not compare the scalability of two applications by saying that one is more scalable than the other. To conclude how scalable an application is, we need to quantify it. Law quantify simulation scalability in a mathematical model, based on two capabilities, simulation and system.
+
+\subsection{Quantifying scalability}
+
+A simulation is built on a set of values that describe its state, this is called measures of interest. We also know it must meet a set of performance requirements. A simulation attain acceptable performance if it execute with correctness and satisfy the performance requirement. For instance, in a web service stress simulation, the number of requests per second is a measure of interest, and a performance requirement is the average response time. If the simulation do not have a minimum satisfactory response time average with correct responses, it did not achieve acceptable performance. 
+
+Based on the measures of interested and the performance requirements, we can tell the complexity of the problem. The author define the complexity size with the function S(n1..ns), where n1 to ns is a set of s variables. This variables are measures of interested and performance requirements inputs. Its assumed that if one of this variables increase, the simulation size function will increase or at least stay the same but never decrease. There are different ways to define the complexity of a problem. It depends on the characteristics we want to analyze.
+
+Until now, we've seen performance as a requirement, however we may also be interested in its precise values. For example, the memory usage size may be a metric that we want to minimize even if we have not defined what is the maximum value that it can achieve. Thus, the author defines a function that characterize the performance metrics, M(m1..mq), where m1..mq is a set of q performance metrics. If a performance metric increase, its assumed that the performance improves. We can reverse the metrics that do not behave this way. If Y is the memory usage metric, we can pass 1/Y as input. With these definition we conclude that a simulation capability is the relation of the functions S and M, defined as C(S,M) = SM.
+
+As said previously, to measure scalability we need also to quantify the system capability. The inputs we have to achieve this are the system characteristics, such as the CPU clock speed. The function P(h1..hp) describes it, where h1..hp are the variables that represent the measures of the system.
+
+With the definition of these two functions, we choose a system architecture with capability P1. C1(S,M) will be choose as the largest value that the system capability P1 can compute the problem with correctness and meet all the performance requirements for every element of the simulation capability domain. Ci and Pi represents their capabilities I times greater than C1 and P1, respectively.
+
+Therefore, the author defines scalability as the largest real-value j such as Ci(S,M)/Pi >= k for every I in the real-value interval [1,j], where k = C1(S, M)/P1, and Pi can compute the problem of complexity size Ci(S,M) with correctness and meet all the performance requirements. With these definition we can are verify the interval where the ratio between the simulation capability and the system capability stays at least equal as it was initially. Therefore, measure the scalability of a simulation.
+
+
+Describes the problems and them a more specfic definition

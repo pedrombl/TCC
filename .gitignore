@@ -1,0 +1,17 @@
+*.ps
+*.dvi
+*.log
+*.aux
+*.blg
+*.toc
+*.brf
+*.ilg
+*.ind
+*.idx
+missfont.log
+*.bbl
+*.out
+*.lof
+*.lot
+*.synctex.gz
+.DS_Store
