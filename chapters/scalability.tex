@@ -29,6 +29,17 @@ These restrictions show us that scalability is something relative, a system may 
 
 With these description, the author narrow the scalability comparison of two system relative to a specific aspect of the simulation and architectural. For example, we choose $c$ as the size of data send per request to a web service, and h as the RAM of the web service hardware. Then we can compare if one system has more scalability than the other in terms of space usage. 
 
+\subsection{Types of scalability}
+With the definition presented in the subsection above, we conclude that are different ways to examine the scalability of a system. \cite{BONDI} presents four types of scalability that we can observe:
+
+\begin{description}
+\item[Load scalability] A system has more load scalability if it behaves properly with light, moderate or heavy loads. In this case, the word \emph{properly} is related to functional and non-functional aspects, such as resource contention, excessive of delay, and ineffective memory consumption. Thus, to measure the load scalability of a system using the scalability function, we would use, for instance,  number of request per second as the input for the simulation capability function, the number o processor as the input for the architectural capability, and fixing the response time average as a performance metric.
+\item[Space scalability]  A system has more space scalability if its memory requirements grows largely when the number of supported items increase. For example, measuring the scalability based on the data size sent per request as an input for the simulation capability function, the RAM of the system hardware, and fixing the percentage of RAM used as a performance metric.
+\item[Space-time scalability] A system has more space-time scalability if it function properly, i.e., without much delays, when the number of its objects increase. If a search system takes more time to find an information because of the increasing of data storage, even if its hardware resources has grown too, we conclude that it does not have space-time scalability.
+\item[Structural scalability] A system is structural scalable if it does not prevents the increasing of objects that it encompasses. For example, if a peer-to-peer system has a maximum number of nodes that it support and another has not, then the latter is more structural scalable than the former.
+\end{description}
+
+These types of scalability gives us a direction of what we need to observe when comparing the scalability of the systems. Its important to note that they are, sometimes, dependent from each other. A system that needs space-time scalability may also needs space scalability because the huge grown of memory might cause a delay to find information.
 
 
 
