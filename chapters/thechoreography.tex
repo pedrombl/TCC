@@ -1,0 +1,91 @@
+\section{The Choreography Testbed}
+
+We developed a web service choreography to be our test bed for getting information and developing the Rehearsal Framework. Thus, we will use this choreography to collect information about how we are going to verify its scalability. In this chapter, we will explain how it works.
+
+The choreography implements a service of a supermarket of the future. Based on a list of supermarkets, we are able to get the lowest price possible of a desired product list. For each product, the choreography gets it from the supermarket that offers it with the lowest price. Therefore, we will purchase a list of products with the lowest price possible from a list of supermarkets.
+
+\subsection{Participants of the choreography}
+\begin{description}
+
+\item[SMRegistry] The SMRegistry service stores a list of services that implements the supermarket role. Its methods are presented on Table \ref{smregistryapi}.
+	\begin{table}[htdp]
+	\caption{SMRegistry API}
+	\begin{center}
+	\begin{tabular}{|c|c|c|m{4cm}|}
+		\hline
+		Method & Input & Output & Description \\ \hline
+		addSupermarket & endpoint : String & confirmation : String & Add a new supermarket endpoint to the supermarket list \\ \hline
+		getList & & supermarkets: List<String> & Return a list of supermarket endpoints \\ \hline
+	\end{tabular}
+	\end{center}
+	\label{smregistryapi}
+	\end{table}%
+
+\item[SupermarketRole] The choreography can have multiple supermarkets, each supermarket must implement the Supermarket Role API, presented on Table \ref{smroleapi}. It must return the price of a product, and purchase a list of products.
+	\begin{table}[htdp]
+	\caption{Supermarket Role API}
+	\begin{center}
+	\begin{tabular}{|c|c|c|c|}
+		\hline
+		Method	& Input				& Output 			& Description \\ \hline
+		getPrice 	& productName: String	& value: Double	& Get the product price of this supermarket \\ \hline
+	\end{tabular}
+	\end{center}
+	\label{smroleapi}
+	\end{table}%
+
+\item[CustomerWS] The CustomerWS service implements the communication with a set of Supermarket services. It receives this list of Supermarkets and is able communicates with all of them to get the minimum price possible of product list. Its operations are presented on Table \ref{customerWSapi}.
+	\begin{table}[htdp]
+	\caption{CustomerWS API}
+	\begin{center}
+	\begin{tabular}{|c|m{3.5cm}|m{3.5cm}|m{4cm}|}
+		\hline
+		Method				& Input					& Output 					& Description \\ \hline
+		setSupermarketList 		& endpoints: List<String>		& endpoints: List<String>		& Set the Supermarket service endpoints \\ \hline
+		setProductList 			& products: List<String>		& products: List<String>		& Set the desired product list \\ \hline
+		getLowestPriceForList	&						& order : Order				& Return the lowest price possible of a product list from a set of Supermarket services \\ \hline
+		makePurchase & id: String, name: String, address: String, zipcode: String & shipper: String & Purchase the list of products verify with the operation above by passing the ID of the order \\ \hline
+		
+	\end{tabular}
+	\end{center}
+	\label{customerWSapi}
+	\end{table}%
+	
+\item[Customer] The Custumer service is an orchestration that communicates with the SMRegistry service to get the list of Supermarket services registered and to request to the CustumerWS service the verification of price and the purchase of a product list with the Supermarket services list. Its API is presented on Table \ref{customerapi}.
+	\begin{table}[htdp]
+	\caption{Customer API}
+	\begin{center}
+	\begin{tabular}{|c|m{3.5cm}|m{3.5cm}|m{4cm}|}
+		\hline
+		Method				& Input					& Output 					& Description \\ \hline
+		getPriceOfProductList	& products: List<String> & order: Order & Return the minimum price of a product list and the id of the order\\ \hline
+		purchase 				& id: String, account: accountType & shipper: String & Make the purchase of the products requested with the operation above \\ \hline
+		getDeliveryData 		& shipper: String, orderID: String & delivery: String & Get information about the delivery of an order \\ \hline
+		
+	\end{tabular}
+	\end{center}
+	\label{customerapi}
+	\end{table}%
+
+\item[Shipper] The Shipper service is responsible to stores information about the delivery of products to an address. The shipper receives information about an order from a Supermarket service and send delivery information of an order to the Custumer Service. Table \ref{shipperapi} shows the its API.
+
+\begin{table}[htdp]
+\caption{Shipper API}
+\begin{center}
+	\begin{tabular}{|c|c|c|m{4cm}|}
+	\hline
+	Method			& Input					& Output 					& Description \\ \hline
+	setDelivery		& id: String, zipcode: String	& confirmation: String		& Receives the zipcode of an order \\ \hline
+	getDataAndTime	& id: String				& time: String				& Returns the time that the order will be delivered \\ \hline
+\end{tabular}
+\end{center}
+\label{shipperapi}
+\end{table}%
+
+
+
+\end{description}
+
+
+\subsection{}
+Before purchasing the products, its possible to verify the total price, which is the minimum price, of the product list. 
