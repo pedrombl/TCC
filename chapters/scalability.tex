@@ -1,4 +1,4 @@
-\section{Scalability}
+\section{Scalability Testing}
 
 \subsection{Definition of Scalability}
 In a large scale environment, a choreography must be able to attend different scenario sizes. Web Services Choreographies will probably have some periods that will require more resources that it is usual to maintain its performance.  Suppose that a specific choreography, for example, receives usually N requests per second but, in some specific times, receives 10N requests. It must have tolerance to this increase of access quickly.
@@ -29,7 +29,7 @@ These restrictions show us that scalability is something relative, a system may 
 
 With these description, the author narrow the scalability comparison of two system relative to a specific aspect of the simulation and architectural. For example, we choose $c$ as the size of data send per request to a web service, and h as the RAM of the web service hardware. Then we can compare if one system has more scalability than the other in terms of space usage. 
 
-\subsection{Types of scalability}
+\subsection{Types of Scalability}
 With the definition presented in the subsection above, we conclude that are different ways to examine the scalability of a system. \cite{BONDI} presents four types of scalability that we can observe:
 
 \begin{description}
@@ -41,12 +41,27 @@ With the definition presented in the subsection above, we conclude that are diff
 
 These types of scalability gives us a direction of what we need to observe when comparing the scalability of the systems. Its important to note that they are, sometimes, dependent from each other. A system that needs space-time scalability may also needs space scalability because the huge grown of memory might cause a delay to find information.
 
+\subsection{Related Works}
 
+\cite{STAS} present the Scalability Testing and Analysis System (STAS), which is a tool that support users for running scalability analysis of algorithms and system. STAS analysis scalability using the metric \emph{isospeed-efficiency scalability}, also known as \emph{isospeed-e}. 
 
+The architecture capability used in this metric is the sum of the supported speeds of all system nodes. Let $h_{i}$ be the supported speed of a specific node $i$, then the architecture capability of the system is $P(n) = \sum_{i=1}^{n} h_i$ , where $n$ is the number of nodes. 
 
+A function that characterize the complexity of the problem, defined by the user, combined with the execution time, which is the performance metric, results the simulation capability function $C = \frac{S}{T}$, where $S$ is the value that represents the complexity of the problem and $T$ is the execution time metric. Therefore the scalability function is defined as $\frac{C}{P}$.
 
+STAS is composed by four components as shown in Figure \ref{stasarchitecture}: system characterization component, algorithm pre-analysis component, scalability tester component, and scalability analyzer component.
 
+\begin{figure}[htbp]
+\begin{center}
+	\includegraphics[scale=0.6]{images/stasarchitecture}
+\caption{STAS Architecture [\cite{STAS}]}
+\label{stasarchitecture}
+\end{center}
+\end{figure}
 
+The system characterization component is responsible for calculating the supported speed of each node available by measuring their FLOPS. The algorithm pre-analysis component is responsible for calculating the problem complexity defined by the user. 
+
+The scalability tester component executes the application and measure the time of the execution.  It calculates $C_1$ by applying the function described above with the values obtained. After that, it execute the application after doubling the number of nodes and the parameter of the complexity problem function. $C_2$ is obtained with the execution information. This process is done until it reaches the maximum number of nodes available. The results are compared by the scalability analyzer component that concludes how scalable the application is.
 
 
 
