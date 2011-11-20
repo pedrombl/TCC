@@ -1,11 +1,11 @@
 \section{Scalability Testing}
 
 \subsection{Definition of Scalability}
-In a large scale environment, a choreography must be able to attend different scenario sizes. Web Services Choreographies will probably have some periods that will require more resources that it is usual to maintain its performance.  Suppose that a specific choreography, for example, receives usually N requests per second but, in some specific times, receives 10N requests. It must have tolerance to this increase of access quickly.
+In a large scale environment, a choreography must be able to attend different scenario sizes. Web Services Choreographies will probably have some periods that will require more resources that it is usual to maintain its performance.  Suppose that a specific choreography, for example, receives usually N requests per second but, in some specific times, receives 10N requests. It tolerate this increase of access quickly.
 
-To support this issue, we may increase its system capability between this period of high demand. We want to have the same performance that we had previously. Therefore, we must know how much of resources we should increase to achieve this goal.  Each choreography will have its particular solution. This will depends on how the choreography is implemented. Bad choreographies architectures will need to increase a lot to achieve that, someones won't even achieve that.
+To support this issue, we may increase its system capability between this period of high demand. We want to have the same performance that we had previously. Therefore, we must know how much of resources we should increase to achieve this goal.  Each choreography will have its particular solution. This will depends on how the choreography is implemented. Bad choreographies architectures will need to increase heavily to achieve that, someones won't even achieve.
 
-For instance, in the example above, we could increase the resources in the same scale that the number of access increased to gain the same performance. However, only that will not assure we will perform that, i.e.  the choreography may have a bottleneck that will not disappear if we add more resources. Thus, we also must pay attention with the implementation of the choreography. We gain scalability with the collaboration of the hardware and the software. 
+For instance, in the example above, we could increase the resources in the same scale that the number of access increased to gain the same performance. However, only that will not assure we will perform that, i.e.  the choreography may have a bottleneck that will not disappear if we add more resources. Thus, we also must pay attention in the implementation of the choreography. We gain scalability with the collaboration of the hardware and the software. 
 
 Architectures that achieved the same performance by increasing the architecture capability with the same proportion as the increase of the problem size are scalable [\citet{QUINN}]. For \citet{LAW}, a simulation is scalable if the improvements in simulation capability express in direct proportion improvements in architectural capability. However, these definitions just say if an application is scalable or not. Consequently, we can not compare the scalability of two applications by saying that one is more scalable than the other. To conclude how scalable an application is, we need to quantify it. Law quantify simulation scalability in a mathematical model, based on two capabilities, simulation and architectural. 
 
@@ -43,7 +43,7 @@ These types of scalability gives us a direction of what we need to observe when 
 
 \subsection{Related Works}
 
-\cite{STAS} present the Scalability Testing and Analysis System (STAS), which is a tool that support users for running scalability analysis of algorithms and system. STAS analysis scalability using the metric \emph{isospeed-efficiency scalability}, also known as \emph{isospeed-e}. 
+\cite{STAS} present the Scalability Testing and Analysis System (STAS), a tool that supports the users for running scalability analysis of algorithms and system. STAS analysis scalability using the metric \emph{isospeed-efficiency scalability}, also known as \emph{isospeed-e}. 
 
 The architecture capability used in this metric is the sum of the supported speeds of all system nodes. Let $h_{i}$ be the supported speed of a specific node $i$, then the architecture capability of the system is $P(n) = \sum_{i=1}^{n} h_i$ , where $n$ is the number of nodes. 
 
@@ -61,7 +61,11 @@ STAS is composed by four components as shown in Figure \ref{stasarchitecture}: s
 
 The system characterization component is responsible for calculating the supported speed of each node available by measuring their FLOPS. The algorithm pre-analysis component is responsible for calculating the problem complexity defined by the user. 
 
-The scalability tester component executes the application and measure the time of the execution.  It calculates $C_1$ by applying the function described above with the values obtained. After that, it execute the application after doubling the number of nodes and the parameter of the complexity problem function. $C_2$ is obtained with the execution information. This process is done until it reaches the maximum number of nodes available. The results are compared by the scalability analyzer component that concludes how scalable the application is.
+The scalability tester component executes the application and calculates the execution time.  It calculates $C_1$ by applying the function described above with the values obtained. After that, it execute the application doubling the number of nodes and the parameter of the complexity problem function. $C_2$ is obtained with the execution information. This process is done until it reaches the maximum number of nodes available. The results are compared by the scalability analyzer component that concludes how scalable the application is.
+
+\cite{p2p} presents a methodology and a framework for testing peer-to-peer (P2P) application. The authors combine functional and non-functional tests because in P2P applications volatile and scale changes may happen and might affect the functionalities of the system. The framework is able to manipulate all nodes of the application and tests different scenarios. They apply scalability testing by changing the scales of the application and validating their functionalities. 
+
+Using Java Annotations, the developer specify the behavior and the tests of the nodes. These annotations give to de developer the freedom to manipulate and test the application in different scenarios and scales.
 
 
 
