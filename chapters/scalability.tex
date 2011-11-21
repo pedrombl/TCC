@@ -39,14 +39,32 @@ The definition above, made us conclude that the function $\frac{C_{i}(S_{i},M_{i
 \begin{itemize}
 \item Increase S with the same proportion as the architecture capability, in this case we expect the M to be constant;
 \item Fix S, then is expected that M will increase with the same proportion as the architecture capability;
-\item Increase S in a different proportion of the architecture capability, then we expect that M will increase in a proportion that will make the function $SxM$ increase with the same proportion as the architecture capability.
+\item Increase S in a different proportion of the architecture capability, then we expect that M will increase in a proportion that will make the function $S \times M$ increase with the same proportion as the architecture capability.
 \end{itemize}
 
-In this project we will use the first option since we have control of the complexity of the problem size and its better to expect the performance metric to be constant.
+If we use the first option, the performance metric of an application that has a good scalability should stay constant and one that has a bad scalability will increase. Thus, an application with good scalability will have a performance metric graph with a horizontal line (Figure \ref{fig:goodscalability}) and an application with bad scalability will have an increasing line (Figure \ref{fig:badscalability}).
 
+\begin{figure}[ht]
+\begin{minipage}[b]{0.5\linewidth}
+\centering
+\includegraphics[scale=0.7]{images/scalabilitygood}
+\caption{Performance metric graph with \\* a \textbf{good scalability}}
+\label{fig:goodscalability}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[b]{0.5\linewidth}
+\centering
+\includegraphics[scale=0.7]{images/scalabilitybad}
+\caption{Performance metric graph with \\* a \textbf{bad scalability}}
+\label{fig:badscalability}
+\end{minipage}
+\end{figure}
+
+
+In this project we will use the first option because we have control of the variables that define the complexity of the problem and it is easier to visualize in a performance metric graph the difference between an application with good scalability and bad scalabiltiy.
 
 \subsection{Types of Scalability}
-With the definition presented in the subsection above, we conclude that are different ways to examine the scalability of a system. \cite{BONDI} presents four types of scalability that we can observe:
+With the definition presented in the Subsection REFERENCIA above, we conclude that are different ways to examine the scalability of a system. \cite{BONDI} presents four types of scalability that we can observe:
 
 \begin{description}
 \item[Load scalability] A system has more load scalability if it behaves properly with light, moderate or heavy loads. In this case, the word \emph{properly} is related to functional and non-functional aspects, such as resource contention, excessive of delay, and ineffective memory consumption. Thus, to measure the load scalability of a system using the scalability function, we would use, for instance,  number of request per second as the input for the simulation capability function, the number o processor as the input for the architectural capability, and fixing the response time average as a performance metric.

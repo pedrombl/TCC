@@ -1,5 +1,39 @@
 \section{A Framework for Scalability Testing}
 
+The Scalability Testing Framework aims at assisting the scalability explorer, the person who tests the scalability, to verify the scalability of an application. He/She must follow some steps to verify its scalability:
+
+\begin{enumerate}
+\item Choose the variables of the problem complexity, the performance, and the architecture;
+\item Define the functions of the complexity size of the problem, performance metric, and the architecture capability;
+\item Choose initial values for these variables;
+\item Execute the application with these initial values and obtained the initial value of the performance metric;
+\item Execute multiple times with the same process and collect the performance metric for each execution;
+\item Analyze the performance metric;
+\end{enumerate}
+
+To support the scalability explorer, the Scalability Testing Framework automate the steps 4 and 5, and assist the analysis of the performance metric obtained (Step 6). It has been developed in Java and it must be used with it or with languages that run on the JVM (Java Virtual Machine) and can use Java Annotations, such as Scala.
+
+Since the scalability explorer needs to execute multiple times the same process by only changing the variables that define the complexity size of the problem and the performance metric, the framework provides two Java Annotations \emph{@ScalabilityTest} and \emph{@Scale} that gives the ability to the scalability explorer execute steps 4 and 5 by only specifying one method that describes the execution and the variables that needs to change for each execution.
+
+\lstset{caption={Scalability test method template},label=MethodTemplate}
+\begin{lstlisting}
+@ScalabilityTest(scalabilityFunction=<ScalabilityFunction>, steps=<Integer>)
+public List<Number> methodName(@Scale Number parameterScale, Object parameter) {
+	//execution process
+	return listOfNumbers;
+}
+
+\end{lstlisting}
+
+The template of the method that will be executed by the framework is shown in snippet \ref{MethodTemplate}. The annotation \emph{@ScalabilityTest} has two parameters: \emph{scalabilityFunction} and \emph{steps}. The \emph{steps} parameter defines how many times the method will be executed, we call each execution as a \emph{step}.
+
+With the \emph{scalabilityFunction} parameter, the scalability explorer specifies how the method parameters with the annotation \emph{@Scale} will increase for each step. The parameter specified is a class that extends the ScalabilityFunction class. The classes available are \emph{LinearIncrease}, \emph{ExponentialIncrease}, and \emph{QuadraticIncrease}, which are described with more details below.
+
+The framework collects the performance metric of each step as a list of values. After each execution, it calculates the mean and the standard deviation of these list to plot them in a graph afterward.
+
+
+
+
 \subsection{Architecture}
 
 \subsection{Implementation}
