@@ -66,7 +66,7 @@ The Sequence Diagram \ref{sequenceDiagramExample} shows the how the example abov
 
 Code \ref{GraphPlotExample} shows how to use the report to plot a graph using the \emph{ScalabilityReportChart}. Since it can plot more than one scalability test for comparisons, it receives a list of reports. The scalability explorer can also specify the label for the performance metric axis, which is by default \emph{"Performance metric"}. Image \ref{graphIllustration} shows a graph illustration of the example above.
 
-\lstset{caption={Graph plotting example},label=GraphPlotExample}
+\lstset{caption={Graph plotting code example},label=GraphPlotExample}
 \begin{lstlisting}
 ScalabilityReportChart chart = new ScalabilityReportChart();
 List<ScalabilityReport> reports = new ArrayList<ScalabilityReport>();
@@ -83,7 +83,7 @@ chart.createChart(reports, "average response time (ms)");
 \end{figure}
 
 \subsection{Architecture}
-The Scalability Testing Framework is composed by three main packages, one related to the annotations, one used to interpret the annotations and execute the scalability tests, and another to show the scalability testing report to the scalability explorer. The class diagram is presented in Figure \ref{classDiagram}.
+The Scalability Testing Framework is composed by three main packages, one related to the framework hot spots, where the annotations is located, one used to interpret the annotations and execute the scalability tests, and another to show the scalability testing report to the scalability explorer. The class diagram is presented in Figure \ref{classDiagram}.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -93,21 +93,21 @@ The Scalability Testing Framework is composed by three main packages, one relate
 \end{center}
 \end{figure}
 
-\subsubsection{Annotations and Related Classes}
-The framework provides two Java Annotations, \emph{@ScalabilityTest} and \emph{@Scale}. 
+\subsubsection{Framework Hot Spots: Annotations and Scalability Increase Functions}
+The Scalability Testing Framework has two principal hot spots. A hot spot of a framework is a place of the architecture where the developer can add and modified desired functionalities to adapt the application. In this case, for instance, the test specification is a content that the tester will add to execute the framework. The firsts hot spots the framework provides are the two Java Annotations, \emph{@ScalabilityTest} and \emph{@Scale}.
 
 The \emph{@Scale} annotation is a parameter annotation. It must be located before the specification of the parameter and the parameter type. The parameters with this annotation will be increased by the framework in each execution step.
 
-The \emph{@ScalabilityTest} annotation is a method annotation, which means that it must be used for methods and it is located right above the method that described a scalability test. It has two parameters. The \emph{steps} describes how many steps the framework will execute the test and must be specified. The \emph{scalabilityFunction} describes how the method parameters with the \emph{@Scale} will increase in each step. It is defined by a class that extends the \emph{ScalabilityFunction} class.
+The \emph{@ScalabilityTest} annotation is a method annotation, which means that it must be used for methods and it is located right above the method that describes a scalability test. It has two parameters. The \emph{steps} describes how many steps the framework will make to execute the test. The \emph{scalabilityFunction} describes how the method parameters with the \emph{@Scale} will increase in each step. It is defined by a class that extends the \emph{ScalabilityFunction} class.
 
-There are three ScalabilityFunction class implemented:
+This is the second principal hot spot of the framework. There are, already, three ScalabilityFunction class implemented:
 \begin{description}
 \item[LinearIncrease] increases the parameters linearly. Thus, a parameter with initial value $x$ will be $2x$ in the second step and $nx$ in step $n$.
 \item[ExponetialIncrease] increases the parameters exponentially. The parameter with initial value $x$ will be $x \times 2$ in the second step and $x \times 2^n$ in step $n$.
 \item[QuadraticIncrease] increases the parameters quadratically. The parameter with initial value $x$ will be $x \times 2^2$ in the second step and $x \times n^2$ in step $n$.
 \end{description}
 
-The scalability explorer can develop another scalability function for a particular case if needed. The class must extends the \emph{ScalabilityFunction} class which has a method that receives two integers with the last value used and the initial value passed by the scalability explorer.
+However, the scalability explorer can develop other scalability function for a particular case if needed. The class must extend the \emph{ScalabilityFunction} class which has a method that defines how a parameter will increase. It receives two integers with the last value used and the initial value and must return a new value.
 
 \subsubsection{ScalabilityTests Interpreters}
 The \emph{ScalabilityTesting} class is called by the scalability explorer to execute the scalability tests. It executes them with the support of the \emph{ScalabilityTestMethod}, which interpret the annotations of the scalability tests.
