@@ -87,7 +87,7 @@ The Scalability Testing Framework is composed by three main packages, one relate
 
 \begin{figure}[htbp]
 \begin{center}
-	\includegraphics[scale=0.8]{images/classDiagram.jpg}
+	\includegraphics[scale=0.75]{images/classDiagram.jpg}
 \caption{Scalability Testing Framework Class Diagram}
 \label{classDiagram}
 \end{center}
@@ -112,7 +112,7 @@ However, the scalability explorer can develop other scalability function for a p
 \subsubsection{ScalabilityTests Interpreters}
 The \emph{ScalabilityTesting} class is called by the scalability explorer to execute the scalability tests. It executes them with the support of the \emph{ScalabilityTestMethod}, which interpret the annotations of the scalability tests.
 
-For each step, a \emph{ScalabilityStepReport} is instantiated with the results. With the support of the Commons Math package, this class calculates the mean and the starndard deviation of the performance metrics.
+For each step, a \emph{ScalabilityStepReport} is instantiated with the results. With the support of the Commons Math package, this class calculates the mean and the stardard deviation of the performance metrics.
 
 After the execution, the \emph{ScalabilityTesting} class instantiate a \emph{ScalabilityReport} that has a list of \emph{ScalaiblityStepReport}. This class can be used by the scalability explorer to a plot a graph to analyze the results.
 
@@ -121,3 +121,26 @@ The scalability explorer can plot the result of one or more scalability tests wi
 
 
 \subsection{Implementation}
+
+The framework was developed in Java since it belongs to the Rehearsal Framework, which is in Java. We've been developed it using Test-Driven Development (TDD), described in the introduction, with the support of the JUnit Framework\footnote{http://www.junit.org/} to specify and run the tests.
+
+The development has been done using the Eclipse IDE\footnote{http://www.eclipse.org/} with the support of the plugins EclEmma\footnote{http://www.eclemma.org/} and Eclipse Metrics\footnote{http://eclipse-metrics.sourceforge.net/}. The first one is a Java code coverage tool to verify the coverage of the tests in the code. The Scalability Testing Framework has 100\% of test coverage. The second one calculates some metrics of the code, such as cohesion metrics, which made us developed a code with quality.\\
+
+The Scalability Testing Framework uses two third-partner libraries:
+\begin{description}
+\item[JFreeChart\footnote{http://www.jfree.org/jfreechart/}] to plot the performance metric graphs. It is depends on the JCommon library. Both are licensed under the terms of GNU Lesser General Public License (LGPL). 
+\item[Math Commons\footnote{http://commons.apache.org/math/}] to calculate statistical values of the performance values returned by the scalability tests. It is licensed under the terms of Apache License.
+\end{description}
+
+The project used the Design Pattern Strategy[\citet{GOF1995}] in the implementation of the scalability increase functionality. The Strategy structure is presented in Figure \ref{strategyStructure}. 
+
+The \emph{ScalabilityTesting} class, that executes the tests, collects a \emph{ScalabilityFunction} class, the strategy class, and increases the method parameters without knowing which strategy is being used. The concrete strategy classes can be the \emph{LinearIncrease}, \emph{ExponentialIncrease}, \emph{QuadraticIncrease}, and another class developed by the scalability explorer that extends the \emph{ScalabilityFunciton} class. As we can observe in Figure \ref{classDiagram}, the structure of the classes described is equivalent to the Strategy Structure.
+\begin{figure}[htbp]
+\begin{center}
+	\includegraphics[scale=0.5]{images/strategyStructure}
+\caption{Design Pattern Strategy Structure from \citet{GOF1995}}
+\label{strategyStructure}
+\end{center}
+\end{figure}
+
+
