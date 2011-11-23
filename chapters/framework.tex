@@ -1,6 +1,6 @@
 \section{A Framework for Scalability Testing}
 
-The Scalability Testing Framework aims at assisting the scalability explorer, the person who tests the scalability, to verify the scalability of an application. He/She must follow some steps to verify its scalability:
+The Scalability Testing Framework aims at assisting the scalability explorer, the person who tests the scalability, to verify the scalability of an application. Based on the research presented in the last section, we conclude that the tester must apply the following steps to assess a system scalability. 
 
 \begin{enumerate}
 \item Choose the variables of the problem complexity, the performance, and the architecture;
@@ -11,13 +11,16 @@ The Scalability Testing Framework aims at assisting the scalability explorer, th
 \item Analyze the performance metric.
 \end{enumerate}
 
-To support the scalability explorer, the Scalability Testing Framework automate the steps 4 and 5, and assist the analysis of the performance metric obtained (Step 6). It has been developed in Java and it may be used with it or with languages that run on the JVM (Java Virtual Machine) and can be used with Java Annotations, such as Scala.
+For the reason that we do not want to restrict which type of scalability the tester will make, we choose to develop a framework where steps 1 to 3 could be made without limitations.
+To support the scalability explorer, the Scalability Testing Framework automates the steps 4 and 5, which are repetitive process. It, also, assists the analysis of the performance metric obtained (Step 6).
 
-Since the scalability explorer needs to execute multiple times the same process by only changing the variables that define the complexity size of the problem and the architecture capability, the framework provides two Java Annotations \emph{@ScalabilityTest} and \emph{@Scale} that gives the ability to the scalability explorer to execute steps 4 and 5 by only specifying one method that describes the execution and the variables that needs to change for each execution.
+It has been developed in Java and it may be used with it or with languages that run on the JVM (Java Virtual Machine) and can be used with Java Annotations, such as Scala.
+
+The scalability explorer needs to execute the same process multiple times by only changing the variables that define the complexity size of the problem and the architecture capability. To support that, the framework provides two Java Annotations \emph{@ScalabilityTest} and \emph{@Scale} that gives the ability to the scalability explorer to execute steps 4 and 5. The tester must only specify one method that describes the execution and the variables that need to change for each execution.
 
 \lstset{caption={Scalability test method template},label=MethodTemplate}
 \begin{lstlisting}
-@ScalabilityTest(scalabilityFunction=<ScalabilityFunction>, steps=<Integer>)
+@ScalabilityTest(scalabilityFunction=<ScalabilityFunction.class>, steps=<Integer>)
 public List<Number> methodName(@Scale Number parameterScale, Object parameter) {
 	//execution process
 	return performanceMetrics;
@@ -25,7 +28,7 @@ public List<Number> methodName(@Scale Number parameterScale, Object parameter) {
 
 \end{lstlisting}
 
-The template of the method that is executed by the framework is shown in snippet \ref{MethodTemplate}. The annotation \emph{@ScalabilityTest} has two parameters: \emph{scalabilityFunction} and \emph{steps}. The \emph{steps} parameter defines how many times the method will be executed, we call each execution as a \emph{step}.
+A template of the method that is executed by the framework is shown in snippet \ref{MethodTemplate}. The annotation \emph{@ScalabilityTest} has two parameters: \emph{scalabilityFunction} and \emph{steps}. The \emph{steps} parameter defines how many times the method will be executed, we call each execution as a \emph{step}.
 
 With the \emph{scalabilityFunction} parameter, the scalability explorer specifies how the method parameters with the annotation \emph{@Scale} will increase for each step. The parameter specified is a class that extends the ScalabilityFunction class. The classes available are \emph{LinearIncrease}, \emph{ExponentialIncrease}, and \emph{QuadraticIncrease}, which are described with more details below.
 
@@ -33,7 +36,7 @@ The framework collects the performance metric of each step as a list of values. 
 
 \subsection{Example}
 
-Supposed that we developed a web service which is located in a cloud environment and we want to verify its \emph{load scalability}. Therefore, we choose the number of requests per second to be the function of the complexity size of the problem, the number of nodes which the web service is running upon, and the average response time as the performance metric. Code \ref{TestExample} shows an example of scalability test in this case.
+Supposed that we developed a web service which is located in a cloud environment and we want to verify its \emph{load scalability}. Therefore, we choose the number of requests per second to be the complexity size of the problem function, the number of nodes which the web service is running upon as an architecture capability, and the average response time as the performance metric. Code \ref{TestExample} shows an example of scalability test in this case.
 \lstset{caption={Scalability test example},label=TestExample}
 \begin{lstlisting}
 @ScalabilityTest(scalabilityFunction=LinearIncrease.class, steps=5)
@@ -45,7 +48,9 @@ public List<Long> scalabilityTest(@Scale int requests, @Scale int numberNodes) {
 }
 \end{lstlisting}
 
-At Line 1, we described that this method is a scalability test which must be execute 5 times  and the parameters with the \emph{@Scale} annotation should increase linearly. At Line 4, we call a method that will change the number of nodes where the web service is deployed. Then, at Line 5, we call a function that makes a number of requests per second to the web service and returns the response times of each execution.
+At Line 1 is described that this method is a scalability test which must be execute 5 times  and that the parameters with the \emph{@Scale} annotation(Line 2) should increase linearly. 
+
+At Line 4, we call a method that will change the number of nodes where the web service is deployed. If we increase the number of nodes, we improve the architecture capability. Then, at Line 5, we call a function that makes a number of requests per second to the web service and returns the response times of each execution.
 
 The framework will execute the scalability test with the call presented in the Code \ref{ScalabilityTestCall}. The object \emph{wsScalabilityTest} is the one where the test is described, the string \emph{"scalabilityTest"} is the name of the scalability test, and the integers \emph{1000} and \emph{1} are the initial values of the test parameters.
 \lstset{caption={Scalability test call},label=ScalabilityTestCall}
@@ -54,15 +59,16 @@ ScalabilityReport report;
 report = ScalabilityTesting.run(wsScalabilityTest, "scalabilityTest", 1000, 1);
 \end{lstlisting}
 
-The Sequence Diagram \ref{sequenceDiagramExample} shows the how the example above will be executed by the framework. It will execute 5 times, increasing the test parameters linearly, collecting the results, and calculating the mean and the standard deviation for each execution step. After the execution, the framework return a \emph{ScalabilityReport} object where contains the information about the execution.
 
-\begin{figure}[hbt]
+\begin{figure}[h]
 \begin{center}
 	\includegraphics[scale=0.7]{images/sequenceExample.jpg}
 \caption{Sequence Diagram of the Example \ref{ScalabilityTestCall}}
 \label{sequenceDiagramExample}
 \end{center}
 \end{figure}
+
+The Sequence Diagram \ref{sequenceDiagramExample} shows the how the example above will be executed by the framework. It will execute 5 times, increasing the test parameters linearly, collecting the results, and calculating the mean and the standard deviation for each execution step. After the execution, the framework returns a \emph{ScalabilityReport} object where contains the information about the execution.
 
 Code \ref{GraphPlotExample} shows how to use the report to plot a graph using the \emph{ScalabilityReportChart}. Since it can plot more than one scalability test for comparisons, it receives a list of reports. The scalability explorer can also specify the label for the performance metric axis, which is by default \emph{"Performance metric"}. Image \ref{graphIllustration} shows a graph illustration of the example above.
 
@@ -74,7 +80,7 @@ reports.add(report);
 chart.createChart(reports, "average response time (ms)");
 \end{lstlisting}
 
-\begin{figure}[h]
+\begin{figure}[t]
 \begin{center}
 	\includegraphics[scale=0.7]{images/graphExample}
 \caption{Graph Illustration}
@@ -110,11 +116,11 @@ This is the second principal hot spot of the framework. There are, already, thre
 However, the scalability explorer can develop other scalability function for a particular case if needed. The class must extend the \emph{ScalabilityFunction} class which has a method that defines how a parameter will increase. It receives two integers with the last value used and the initial value and must return a new value.
 
 \subsubsection{ScalabilityTests Interpreters}
-The \emph{ScalabilityTesting} class is called by the scalability explorer to execute the scalability tests. It executes them with the support of the \emph{ScalabilityTestMethod}, which interpret the annotations of the scalability tests.
+The \emph{ScalabilityTesting} class is called by the scalability explorer to execute the scalability tests. It executes the scalability test based on the parameters specified in the annotations \emph{@ScalabilityTest} and \emph{@Scale}. It uses the \emph{ScalabilityTestMethod} class, that interprets the annotations of the scalability tests, to collect information of them.
 
-For each step, a \emph{ScalabilityStepReport} is instantiated with the results. With the support of the Commons Math package, this class calculates the mean and the stardard deviation of the performance metrics.
+For each step, a \emph{ScalabilityStepReport} is instantiated with the results. With the support of the Commons Math package, it calculates the mean and the stardard deviation of the performance metrics.
 
-After the execution, the \emph{ScalabilityTesting} class instantiate a \emph{ScalabilityReport} that has a list of \emph{ScalaiblityStepReport}. This class can be used by the scalability explorer to a plot a graph to analyze the results.
+After the execution, the \emph{ScalabilityTesting} class instantiates a \emph{ScalabilityReport} that has a list of \emph{ScalaiblityStepReport}. This class can be used by the scalability explorer to a plot a graph to analyze the results.
 
 \subsubsection{Scalability Tests Graph}
 The scalability explorer can plot the result of one or more scalability tests with their \emph{ScalabilityReport} using the \emph{ScalabilityReportChart}. This class uses the \emph{XYChart} class, that has the procedure to plot the graph with the support of the JFreeChart package.
@@ -132,9 +138,9 @@ The Scalability Testing Framework uses two third-partner libraries:
 \item[Math Commons\footnote{http://commons.apache.org/math/}] to calculate statistical values of the performance values returned by the scalability tests. It is licensed under the terms of Apache License.
 \end{description}
 
-The project used the Design Pattern Strategy[\citet{GOF1995}] in the implementation of the scalability increase functionality. The Strategy structure is presented in Figure \ref{strategyStructure}. 
+The project used the Design Pattern Strategy[\citet{GOF1995}] in the implementation of the functionality that increases the parameters in each step. The Strategy structure is presented in Figure \ref{strategyStructure}. 
 
-The \emph{ScalabilityTesting} class, that executes the tests, collects a \emph{ScalabilityFunction} class, the strategy class, and increases the method parameters without knowing which strategy is being used. The concrete strategy classes can be the \emph{LinearIncrease}, \emph{ExponentialIncrease}, \emph{QuadraticIncrease}, and another class developed by the scalability explorer that extends the \emph{ScalabilityFunciton} class. As we can observe in Figure \ref{classDiagram}, the structure of the classes described is equivalent to the Strategy Structure.
+The \emph{ScalabilityTesting} class, that executes the tests, collects a \emph{ScalabilityFunction} class, the strategy class, and increases the test parameters without the knowledge of which strategy is being used. The concrete strategy classes can be the \emph{LinearIncrease}, \emph{ExponentialIncrease}, \emph{QuadraticIncrease}, and another class developed by the scalability explorer that extends the \emph{ScalabilityFunciton} class. As we can observe in Figure \ref{classDiagram}, the structure of the classes described is equivalent to the Strategy Structure.
 \begin{figure}[htbp]
 \begin{center}
 	\includegraphics[scale=0.5]{images/strategyStructure}
