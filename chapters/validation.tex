@@ -1,10 +1,33 @@
 \section{Validation}
+To validate the first version of the Scalability Testing Framework, we developed two distributed applications. The first one, a distributed matrix multiplication, is a simple application that with a small change in the implementation changes its scalability. Thus, we could use it to compare the scalability of two similar applications and to validate if our framework was capable of showing the difference between them.
 
-We developed a web service choreography to be our test bed for getting information and developing the Rehearsal Framework. Thus, we will use this choreography to collect information about how we are going to verify its scalability. In this chapter, we will explain how it works.
+The second one is a choreography to be our test bed of the framework for this initial validation and future researches. It offers a service that buys with the best price a product list from a set of supermarkets.
+
+\subsection{Distributed Matrix Multiplication Validation}
+
+The Distributed Matrix Multiplication service is a simple distributed application that multiplies two matrices. There is a central node that receives the request and coordinates the multiplication. It request to other nodes to multiply parts of the matrices.
+
+- Algoritmo linear
+- Descricao da forma distribuida
+- Complexidade
+- Como foi implementa
+	- os dois tipos de serviços
+- Qual as tecnologias utilizadas
+- Onde foi implantato
+
+Os testes de escalabilidade
+- Definição das variaveis
+- Definição dos valores
+- Código que foi desenvolvido
+- Resultado
+- Conclusão
+
+\subsection{Choreography Validation}
+We developed a web service choreography to be our test bed for getting information and developing the Rehearsal Framework. Thus, we will use this choreography to collect information about how we are going to verify its scalability. In this section, we will explain how it works.
 
 The choreography implements a service of a supermarket of the future. Based on a list of supermarkets, we are able to get the lowest price possible of a desired product list. For each product, the choreography gets it from the supermarket that offers it with the lowest price. Therefore, we will purchase a list of products with the lowest price possible from a list of supermarkets.
 
-\subsection{Participants of the choreography}
+\subsubsection{Participants of the choreography}
 \label{participantschoreography}
 
 The choreography has five participants. Their roles and API are described bellow:
@@ -70,7 +93,7 @@ The choreography has five participants. Their roles and API are described bellow
 	\end{table}%
 	\end{description}
 	
-\subsection{The workflow}
+\subsubsection{The workflow}
 The choreography has three operations as described in the participant Customer of Subsection \ref{participantschoreography}. Before purchasing an list of products, the user must send this list to the Customer to book them and verify the price. After that, the user can purchase them providing the \emph{id} of the order. Finally, its possible to verify the delivery status to know when the product will arrive. Another message flow that does not happen with these operations is the registering of a Supermarket service in the RegistrySM service. Figure \ref{futuremartConversation} describes a global view of the conversation between the services using BPMN2\footnote{http://www.bpmn.org}.
 
 \begin{figure}[htbp]
@@ -81,7 +104,7 @@ The choreography has three operations as described in the participant Customer o
 \end{center}
 \end{figure}
 
-\subsubsection{The \emph{getPriceOfProductList} workflow}
+\paragraph{The \emph{getPriceOfProductList} workflow\\}
 Figure \ref{getPriceOfProductListworkflow} shows a BPMN Collaboration diagram of the getPriceOfProductList operation. Each lane represents a participant of the choreography. The getPriceOfProductList operation starts with the Customer participant receiving a request with a list of products. It requests to the SMRegistry participant a list of Supermarket services registered. The registry service collects, from its database, all service endpoints stored and returns it to the Customer.
 
 The Customer stores this list and the product list in its database. Then, it calculates the minimum price possible. The process, that calculates the price, request, for each product,  the product price to all Supermarket.  
@@ -92,13 +115,13 @@ After checking out and storing all the products price with their respective supe
 
 \begin{figure}[htbp]
 \begin{center}
-	\includegraphics{images/getPriceOfProductListworkflow}
+	\includegraphics{images/getPriceOfProductListworkflow} 
 \caption{BPMN Collaboration diagram of the choreography operation \emph{getPriceOfProductList}}
 \label{getPriceOfProductListworkflow}
 \end{center}
 \end{figure}
 
-\subsubsection{The \emph{purchase} workflow}
+\paragraph{The \emph{purchase} workflow\\}
 After ordering a list of products and getting the best price for it, the user can request the purchase. The Customer service receives the request with the order ID and the address of the user. Subsequently, starts a loop that purchases the products related to each Supermarket service.
 
 When a Supermarket service receives a purchase request, it sends a message to the Shipper service to deliver the products. After that, it returns a message to the Customer with the Shipper service endpoint that will deliver the products.
@@ -113,7 +136,7 @@ The Shipper service stores the delivery information in its database for future v
 \end{center}
 \end{figure}
 
-\subsubsection{The \emph{getDeliveryData} workflow}
+\paragraph{The \emph{getDeliveryData} workflow\\}
 The user can also verify the delivery status of an order. The Customer service has the getDeliveryData operation that receives an order ID and the Shipper service endpoint. It sends a message to the Shipper requesting the status of an order. The latter collects from its database the order information and returns it. As we can see in Figure \ref{getDeliveryDataworkflow}, the Customer simply returns this data to the user.
 
 \begin{figure}[htbp]
@@ -124,7 +147,7 @@ The user can also verify the delivery status of an order. The Customer service h
 \end{center}
 \end{figure}
 
-\subsubsection{The \emph{registerSupermarket} workflow}
+\paragraph{The \emph{registerSupermarket} workflow\\}
 The registerSupermarket operation is not for the final user of the choreography, but for the user that administrates a Supermarket service. A service that implements the Supermarket role, can register itself into the RegistrySM service, that has a list of all Supermarket services. Figure \ref{registerSupermarketworkflow} describes this registration. A Supermarket service sends a message to register itself. The registrySM service receives this request and stores the service endpoint in its database and returns a confirmation.
 
 \begin{figure}[htbp]
@@ -135,5 +158,5 @@ The registerSupermarket operation is not for the final user of the choreography,
 \end{center}
 \end{figure}
 
-\subsection{Testing the choreography}
+\subsubsection{Testing the choreography}
 
