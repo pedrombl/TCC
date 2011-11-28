@@ -124,7 +124,7 @@ FUNCTION {output}
 FUNCTION {output.check}
 { 't :=
   duplicate$ empty$
-    { pop$ "empty " t * " Em " * cite$ * warning$ }
+    { pop$ "empty " t * " In " * cite$ * warning$ }
     'output.nonnull
   if$
 }
@@ -527,8 +527,8 @@ FUNCTION {format.pages}
 { pages empty$
     { "" }
     { pages multi.page.check
-        { "p\'{a}ginas" pages n.dashify tie.or.space.connect }
-        { "p\'{a}gina" pages tie.or.space.connect }
+        { "pages" pages n.dashify tie.or.space.connect }
+        { "page" pages tie.or.space.connect }
       if$
     }
   if$
@@ -603,8 +603,8 @@ FUNCTION {format.in.ed.booktitle}
 { booktitle empty$
     { "" }
     { editor empty$
-        { "Em " booktitle emphasize * }
-        { "Em " format.editors * ", " * booktitle emphasize * }
+        { "In " booktitle emphasize * }
+        { "In " format.editors * ", " * booktitle emphasize * }
       if$
     }
   if$
@@ -631,7 +631,7 @@ FUNCTION {format.thesis.type}
 
 FUNCTION {format.tr.number}
 { type empty$
-    { "Relat\'{o}rio T\'{e}cnico" }
+    { "Technical Report" }
     'type
   if$
   number empty$
@@ -957,7 +957,7 @@ FUNCTION {phdthesis}
   new.block
   format.btitle "title" output.check
   new.block
-  "Tese de Doutorado" format.thesis.type output.nonnull
+  "PHD Tesis" format.thesis.type output.nonnull
   school "school" output.check
   address output
   % format.date "year" output.check

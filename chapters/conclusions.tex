@@ -1,13 +1,22 @@
 \section{Conclusions}
 
+In this course completion assignment, we first introduced the scalability definition with the function that quantifies scalability. To analyze the scalability of an application, using the function defined earlier, a set of steps was described. The first version of the Scalability Testing Framework was developed to support the scalability explorer to analyze the scalability of an application. It automates some steps that the scalability explorer should do and assist the visualization of the results by plotting a graph with them.
+
+We've done two validations with it, the Distributed Matrix Multiplication and the Supermarket of the Future Choreography. In the first one, we could compare two different approaches of different scalabilities. Using the framework, we could see the difference between them in the graph, and evaluate which approach was more scalable. Therefore, the framework proved to be a good tool for comparing two similar implementations, and verifying the impact of this difference in the scalability.
+
+In the second one we could only analyze the scalability of one approach. Consequently, we couldn't compare to other approaches and evaluate which one was more scalable. We concluded that to analyze the scalability with only one implementation another steps should be done, such as defining an upper bound for the performance metric, and calculating the derived of the curve from the graph and analyze if this value is too high or not. After making another changes to the implementation we would have two slightly different architectures to compare the scalability.
+
+Since the scalability explorer defines the procedures of scalability testing in the framework, the application can pass through different kinds of scalability assessments. This is important on applications that has different variables that can affect its scalability, such as choreographies that are composed by different layers of implementation.
+
+
+
 Using the procedure of quantifying scalability with the Scalability Testing Framework, the tester can verify the application scalability and compare it with other approaches. 
-Se não for para comparar o usuário pode delimitar limites ou verificar a derivada da curva para ver o quanto está inclinando.
-Pode utilizar como métrica conforme vai mudando a arquitetura.
+Se nao for para comparar o usuario pode delimitar limites ou verificar a derivada da curva para ver o quanto esta inclinando.
+Pode utilizar como metrica conforme vai mudando a arquitetura.
 The tester has the freedom to specify how the execution will be done. Thus, the application can pass through different kind of scalability assessments.
 
 \subsection{On Going Work}
-
-•  Experiments in web service choreographies. 
-•  Heuristic to determine the scalability size of an application.
-•  Research on the different types of scalability that are important to choreographies. 
-•  Integration with the Rehearsal Framework [1] (a TDD	 framework  of  choreographies)
+Experiments in web service choreographies. 
+Heuristic to determine the scalability size of an application.
+Research on the different types of scalability that are important to choreographies. 
+Integration with the Rehearsal Framework [1] (a TDD framework of choreographies)
