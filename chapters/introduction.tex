@@ -1,5 +1,5 @@
 \section{Introduction}
-Service-Oriented Architecture (SOA) consists of an architectural model that uses web services as the building blocks of distributed applications~[\citet{Hew09}]. The use of web services to build distributed applications gives some benefits such as the interoperability, a SOA application can be composed by different technologies, and reusability, a web service can be used for different partners ~[\citet{Bean10}].
+Service-Oriented Architecture (SOA) consists of an architectural model that uses web services as the building blocks of distributed applications~[\citet{Hew09}]. The use of web services to build distributed applications gives some benefits such as the interoperability, a SOA application can be composed by different technologies, and reusability, a web service can be used by different partners ~[\citet{Bean10}].
 
 Composability of services is one of the SOA principles and its goal is to delivery a service with the collaboration of a set of web services. Two main approaches have been proposed, the Web Service Orchestration and the Web Service Choreography. Orchestration is a centralized approach, its implementation is simple and straightforward. However, this centralized nature, in a large scale environment, can leads to scalability and fault-tolerance problems. Choreography is a service composition proposed to solve the problems of the web service orquestrations. It is a decentralized scalable approach with no single point of failure. 
 
@@ -7,29 +7,29 @@ Nevertheless few choreography standards have been proposed and, up to now, none 
 
 To take advantage of the choreography scalability, we propose a scalability testing framework to support the scalability verification of the choreography implemented. The choreography developer will be able to analyze which functionalities are not scaling well and improve its architecture before enacting it in the production environment.
 
-This framework is part of the Rehearsal Framework, a Test-Driven Development Framework (TDD)  for Web Service Choreographies. It has a set of components that assist the developer to apply TDD methodology to choreographies to facilitate their development and improve their adoption. TDD is a design technique that drives the development process through tests~[\citet{Beck02}].  
+This framework is part of the Rehearsal Framework, a Test-Driven Development Framework (TDD)  for Web Service Choreographies. It has a set of components that assist the developer for applying TDD methodology in choreographies. It aims at facilitating their development and improving their adoption. TDD is a design technique that drives the development process through tests~[\citet{Beck02}].  
 
-Rehearsal is part of the Baile Project\footnote{http://ccsl.ime.usp.br/baile/} and the CHOReOS Project\footnote{http://choreos.eu/}. It have been developed at the Institute of Mathematic and Statistics from the University of S\~ao Paulo (IME-USP) in conjunction to the master student Felipe Besson, who also assisted the implementation of this course completion assignment.
+Rehearsal is part of the Baile Project\footnote{http://ccsl.ime.usp.br/baile/} and the CHOReOS Project\footnote{http://choreos.eu/}. It have been developed in conjunction with the master student Felipe Besson at the Institute of Mathematic and Statistics from the University of S\~ao Paulo (IME-USP), who also assisted the implementation of this course completion assignment.
 
 
 \subsection{Basic Concepts}
-In this sub-section, we are will describe some basic concepts for this course completion assignment.
+In this sub-section, we will describe some basic concepts for this course completion assignment.
 
-\subsubsection{Web service}
+\subsubsection{Web Service}
 Web service is an interoperable way of providing a service through the web. It is based on a set of standards defined by the World Wide Web Consortion. Among all, there are four standards that are the core of web services~[\citet{Bean10}]:
 \begin{description}
 \item[Extensible Markup Language (XML)] is a machine-readable document used in web services to transport data.
 \item[Web Service Description Language (WSDL)] is the overall service interface definition. It describes the informations about the location of the service, its operations, and the expected inputs and outputs. The consumers requests it to collect information about the web service.
-\item[XML Schemas Definition Language (XSD)] is used to validates XML files. It describes the structure that a XML should have. For web services, it is used to define complex data types and to validate the XML messages exchange between the services. It is referenced or encapsulated in a WSDL. The consumers request it to structure the data that it will send to the web service.
+\item[XML Schemas Definition Language (XSD)] is used to validates XML files. It describes the structure that a XML should have. For web services, it is used to define complex data types and to validate the XML messages exchange between the services. It is referenced or encapsulated in a WSDL. The consumers request it to structure the data that it will be sent to the web service.
 \item[Simple Object Access Protocol(SOAP)] is a protocol of message exchange. It has a set rules for the structure of the messages exchanged. SOAP defines how the message with the data should be sent. The XML data that a consumer sends or receives is encapsulated by some informations such as delivery information and address.
 \end{description}
 
-There are several tools that assist the generation of web services abstracting the standards defined above. For instance, in this project, the development of the distributed applications, to validate the framework, used JAX-WS\footnote{http://jax-ws.java.net/} to support the creation of the web services. It provides a Java API for generating web services in Java.
+There are several tools that assist the generation of web services by abstracting the standards defined above. In this project, the development of the distributed applications, implemented to validate the framework, used JAX-WS\footnote{http://jax-ws.java.net/} to support the creation of the web services. It provides a Java API for generating web services in Java.
 
 \subsubsection{Web Service Choreography}
-Web Service Choreography is a service composition approach. It had been proposed to be a decentralized implementation of the collaboration of services.  It describes a flow of messages between a set of services in a global model, without a controller. This decentralized approach gives more scalability and fault-tolerance because there is not a central point of coordination.  A choreography is composed by participants that describes its role in it. Each participant can have one or more services that implements it.
+Web Service Choreography is a service composition approach. It has been proposed to be a decentralized implementation of the collaboration of services.  It describes a flow of messages between a set of services in a global model, without a controller. This decentralized approach gives more scalability and fault-tolerance because there is not a central point of coordination.  A choreography is composed by participants that describes its role in it. Each participant can have one or more services that implements it.
 
-However, there is not yet a choreography standard widely adopted. For the development of a choreography web service in this project we used BPMN to describe the flow of messages and BPEL to describe the interaction of each participant. 
+However, there is not yet a choreography standard widely adopted. In this project, the development of a web service choreography was made using BPMN to describe the flow of messages and BPEL to describe the interaction of each participant. 
 
 BPMN (Business Process Model and Notation) specifies a business process in a business process model with a graphical representation. It is used to describe a business process and the communication between business processes. We used BPMN in this project to document the choreography developed.
 
