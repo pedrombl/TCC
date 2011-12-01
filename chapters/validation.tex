@@ -53,7 +53,7 @@ double[][] multiplyMatrix(double[][] A, double[][] B, int min, int max, int n) {
 }
 \end{lstlisting}
 
-A distributed application was developed with Java RMI for the communication between the service that coordinates the multiplication, and the services that multiply part of the matrices. Java RMI (Remote Method Invocation) allows the communication between objects of different JVMs~[\citet{JavaRMI}]. One object can manipulate another remote object in the same way it manipulates a local one. The JVM abstracts the lower layers of communication.
+A distributed application was developed with Java RMI for the communication between the service that coordinates the multiplication, and the services that multiply part of the matrices. Java RMI (Remote Method Invocation) allows the communication between objects of different JVMs~[\cite{JavaRMI}]. One object can manipulate another remote object in the same way it manipulates a local one. The JVM abstracts the lower layers of communication.
 
 We used JAX-WS\footnote{http://jax-ws.java.net/}, a Java API for XML Web Services, to provide this service as a web service.  This web service receives a request with the number of nodes that it must use, and the size of the two matrices to multiply. It coordinates the multiplication communicating with the Java RMI servers that multiply parts of the matrices. Figure~\ref{dmm} presents the structure of the application. They were deployed in the Amazon EC2\footnote{http://aws.amazon.com/ec2/}, the Amazon cloud environment.
 

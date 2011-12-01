@@ -116,7 +116,7 @@ This is the second principal hot spot of the framework. There are, already, thre
 
 However, the scalability explorer can develop other scalability function for a particular case if needed. The class must extend the \emph{ScalabilityFunction} class which has a method that defines how a parameter will increase. It receives two integers with the last value used and the initial value and must return a new value.
 
-\subsubsection{ScalabilityTests Interpreters}
+\subsubsection{ScalabilityTest Interpreters}
 The \emph{ScalabilityTesting} class is called by the scalability explorer to execute the scalability tests. It executes the scalability test based on the parameters specified in the annotations \emph{@ScalabilityTest} and \emph{@Scale}. It uses the \emph{ScalabilityTestMethod} class, that interprets the annotations of the scalability tests, to collect information of them.
 
 For each step, a \emph{ScalabilityStepReport} is instantiated with the results. With the support of the Commons Math package, it calculates the mean and the stardard deviation of the performance metrics.
@@ -139,13 +139,13 @@ The Scalability Testing Framework uses two third-partner libraries:
 \item[Math Commons\footnote{http://commons.apache.org/math/}] to calculate statistical values of the performance values returned by the scalability tests. It is licensed under the terms of Apache License.
 \end{description}
 
-The project used the Design Pattern Strategy[\citet{GOF1995}] in the implementation of the functionality that increases the parameters in each step. The Strategy structure is presented in Figure \ref{strategyStructure}. 
+The project used the Design Pattern Strategy[\cite{GOF1995}] in the implementation of the functionality that increases the parameters in each step. The Strategy structure is presented in Figure \ref{strategyStructure}. 
 
 The \emph{ScalabilityTesting} class, that executes the tests, collects a \emph{ScalabilityFunction} class, the strategy class, and increases the test parameters without the knowledge of which strategy is being used. The concrete strategy classes can be the \emph{LinearIncrease}, \emph{ExponentialIncrease}, \emph{QuadraticIncrease}, and another class developed by the scalability explorer that extends the \emph{ScalabilityFunciton} class. As we can observe in Figure \ref{classDiagram}, the structure of the classes described is equivalent to the Strategy Structure.
 \begin{figure}[htbp]
 \begin{center}
 	\includegraphics[scale=0.5]{images/strategyStructure}
-\caption{Design Pattern Strategy Structure from \citet{GOF1995}}
+\caption{Design Pattern Strategy Structure from \cite{GOF1995}}
 \label{strategyStructure}
 \end{center}
 \end{figure}
